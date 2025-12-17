@@ -43,15 +43,9 @@ coverage
 .DS_Store
 Thumbs.db
 
-# Docker
-Dockerfile
-.dockerignore
-docker-compose.yml
-
 # CI/CD
 .github
 
 # Misc
-README.md
 *.md
 .claude

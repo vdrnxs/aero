@@ -21,10 +21,8 @@ COPY apps/web/package.json ./apps/web/package.json
 # .npmrc with node-linker=hoisted ensures Docker compatibility
 RUN pnpm install --frozen-lockfile
 
-# 3. Copy source code (changes frequently, but install is cached)
+# 4. Copy source code (changes frequently, but install is cached)
 COPY . .
-
-EXPOSE 3000
 
 # Start development server from workspace root
 # With node-linker=hoisted, all deps are in /app/node_modules

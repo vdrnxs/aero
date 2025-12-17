@@ -9,11 +9,8 @@ services:
     volumes:
       # Mount source code for hot reload
       - ./apps/web:/app/apps/web
-      - ./foundry:/app/foundry
       # Prevent overwriting node_modules
       - /app/node_modules
-      - /app/apps/web/node_modules
     environment:
       - NODE_ENV=development
-    command: pnpm dev
     restart: unless-stopped
