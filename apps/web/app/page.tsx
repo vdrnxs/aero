@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center p-8">
+      <div className="absolute top-4 right-4">
+        <ModeToggle />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to Aero</CardTitle>
