@@ -4,22 +4,18 @@ apps/*/node_modules
 .pnp
 .pnp.js
 
-# Next.js
+# Next.js build artifacts (will be rebuilt in Docker)
 apps/web/.next
 apps/web/out
 apps/web/build
 
-# Foundry
+# Foundry build artifacts (not needed for frontend-only builds)
 foundry/cache
 foundry/out
 foundry/broadcast/*/31337
 foundry/broadcast/**/dry-run
 
-# Git
-.git
-.gitignore
-
-# Environment files
+# Environment files (use Docker env vars instead)
 .env
 .env*.local
 
@@ -43,9 +39,5 @@ coverage
 .DS_Store
 Thumbs.db
 
-# CI/CD
-.github
-
-# Misc
-*.md
+# Development tools
 .claude

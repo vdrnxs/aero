@@ -1,29 +1,31 @@
-# ============================================
-# Development Dockerfile (optimized for cache)
-# ============================================
-FROM node:20-alpine
+# Production Dockerfile (VPS/self-hosted only)
+# Vercel: Uses its own build system, ignores this file
+# Development: Use `pnpm dev` locally
 
-# Enable pnpm via corepack (official method)
+FROM node:20-alpine AS builder
 RUN corepack enable
-
 WORKDIR /app
 
-# 1. Copy dependency files ONLY (these rarely change)
-# This layer will be cached unless package.json changes
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-
-# 2. Copy workspace package.json files
-# pnpm needs to see the workspace structure to install workspace dependencies
 COPY apps/web/package.json ./apps/web/package.json
-
-# 3. Install dependencies with cache optimization
-# --frozen-lockfile: Don't modify lockfile (like npm ci)
-# .npmrc with node-linker=hoisted ensures Docker compatibility
 RUN pnpm install --frozen-lockfile
 
-# 4. Copy source code (changes frequently, but install is cached)
-COPY . .
+COPY apps/web ./apps/web
+RUN pnpm --filter web build
 
-# Start development server from workspace root
-# With node-linker=hoisted, all deps are in /app/node_modules
-CMD ["pnpm", "dev"]
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+
+# Copy standalone build (includes monorepo structure)
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+# Copy static assets
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+# Copy public folder
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+
+USER nextjs
+EXPOSE 3000
+CMD ["node", "apps/web/server.js"]

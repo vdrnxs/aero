@@ -38,6 +38,9 @@ foundry/broadcast/**/dry-run/
 !foundry/broadcast
 foundry/docs/
 
+# Synced ABIs (generated at build time)
+apps/web/lib/contracts/
+
 # ==========================================
 # Build & Production
 # ==========================================
@@ -51,6 +54,7 @@ coverage/
 # TypeScript
 # ==========================================
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 next-env.d.ts
 
 # ==========================================

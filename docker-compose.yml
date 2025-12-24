@@ -6,11 +6,6 @@ services:
     container_name: aero-web
     ports:
       - "3000:3000"
-    volumes:
-      # Mount source code for hot reload
-      - ./apps/web:/app/apps/web
-      # Prevent overwriting node_modules
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     restart: unless-stopped
