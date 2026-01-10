@@ -1,50 +1,62 @@
-# Aero
+<div align="center">
 
-> Modern Web3 dApp monorepo template with Next.js 16, React 19, and Foundry smart contracts.
+# nextjs-foundry-starter
 
-A production-ready starter for building decentralized applications with the latest frontend technologies and Solidity development best practices.
+> **Aero** - Modern Web3 dApp monorepo template with Next.js 16, React 19, and Foundry smart contracts.
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=flat-square&logo=tailwindcss)
+![Solidity](https://img.shields.io/badge/Solidity-0.8.13-363636?style=flat-square&logo=solidity)
+![Foundry](https://img.shields.io/badge/Foundry-Latest-black?style=flat-square)
+
+[What is this?](#what-is-nextjs-foundry-starter) • [Features](#key-features) • [Tech Stack](#tech-stack) • [Quick Start](#quick-start) • [How It Works](#how-it-works) • [Deployment](#deployment)
+
+</div>
+
+A production-ready starter for building decentralized applications with cutting-edge frontend technologies and Solidity development best practices.
 
 ---
 
-## Features
+## What is nextjs-foundry-starter?
 
-- **Next.js 16** with React 19 and App Router
-- **Tailwind CSS v4** with dark mode and OKLCH color system
-- **Foundry** for blazing-fast smart contract development
-- **TypeScript** end-to-end with strict type safety
-- **shadcn/ui** component library (New York style)
-- **pnpm workspaces** monorepo architecture
-- **Docker** production-ready containerization
-- **Husky + lint-staged** for automated code quality
+**nextjs-foundry-starter** (codename: **Aero**) is a full-stack Web3 development template designed to eliminate setup friction and let you focus on building your dApp.
 
----
+**The Problem**: Setting up a modern Web3 project involves juggling frontend frameworks, smart contract tooling, monorepo architecture, deployment configurations, and type safety. Most templates are either too minimal or overcomplicated.
+
+**The Solution**: Aero provides a carefully architected foundation that combines:
+- Latest React/Next.js features (Server Components, App Router)
+- Blazing-fast Solidity development with Foundry
+- Type-safe contract integration
+- Production-optimized Docker builds
+- Modern styling with Tailwind v4
+
+**Best For**: Developers building Web3 applications who want a solid starting point with modern best practices baked in.
+
+## Key Features
+
+⚡ **Next.js 16 + React 19** - Server Components, App Router, and streaming SSR
+🎨 **Tailwind CSS v4** - New @theme syntax, OKLCH colors, built-in dark mode
+🔗 **Foundry Integration** - Fast Solidity compilation, testing, and ABI sync
+🔐 **Web3 Ready** - Wagmi v2, RainbowKit, and Viem pre-configured
+📦 **pnpm Monorepo** - Isolated dependencies with symlink efficiency
+🎯 **Type-Safe Development** - End-to-end TypeScript with strict mode
+🧩 **shadcn/ui Components** - Copy-paste components you own and customize
+🐳 **Production Docker** - Multi-stage builds (~150MB final image)
+🔒 **Code Quality Automation** - Pre-commit hooks with ESLint + Husky
 
 ## Tech Stack
 
-### Frontend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 16.0.10 | React framework with App Router |
-| React | 19.2.1 | UI library with Server Components |
-| TypeScript | 5.7.3 | Type-safe JavaScript |
-| Tailwind CSS | v4 | Utility-first CSS framework |
-| shadcn/ui | Latest | Customizable component library |
-
-### Smart Contracts
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Foundry | Latest | Smart contract development toolkit |
-| Solidity | ^0.8.13 | Contract programming language |
-| Forge | Latest | Testing framework |
-| Anvil | Latest | Local Ethereum node |
-
-### Development Tools
-| Tool | Purpose |
-|------|---------|
-| pnpm | Fast, efficient package manager |
-| Husky | Git hooks automation |
-| ESLint v9 | Code linting with flat config |
-| Docker | Containerized development |
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Frontend** | Next.js 16, React 19, TypeScript 5.7 | Modern React framework with Server Components |
+| **Styling** | Tailwind CSS v4, shadcn/ui | Utility-first CSS with customizable components |
+| **Web3** | Wagmi v2, RainbowKit, Viem | Wallet connection and contract interaction |
+| **Smart Contracts** | Foundry, Solidity ^0.8.13 | Fast contract development and testing |
+| **Monorepo** | pnpm workspaces | Efficient package management with symlinks |
+| **Deployment** | Docker, Vercel | Production-optimized containerization |
+| **Code Quality** | ESLint v9, Husky, TypeScript | Automated linting and type checking |
 
 ---
 
@@ -52,9 +64,10 @@ A production-ready starter for building decentralized applications with the late
 
 ### Prerequisites
 
-- Node.js 20+
-- pnpm 8+
-- Docker (optional, for containerized development)
+- **Node.js 20+**
+- **pnpm 8+**
+- **Foundry** (install below)
+- **Docker** (optional, for production deployment)
 
 ### Installing Foundry
 
@@ -66,123 +79,101 @@ curl -L https://foundry.paradigm.xyz | bash
 
 # Run foundryup to install forge, cast, anvil, and chisel
 foundryup
+
+# Verify installation
+forge --version
 ```
 
 **Windows users:** Use Git BASH or WSL (PowerShell/CMD not supported)
 
-**Verify installation:**
-```bash
-forge --version
-# Should show: forge 0.x.x (...)
-```
-
 ### Installation
 
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone <repository-url>
 cd aero
 
-# 2. Install frontend dependencies
+# Install frontend dependencies
 pnpm install
 
-# 3. Initialize Foundry (smart contracts)
+# Initialize Foundry (smart contracts)
 forge init foundry --no-git
 ```
 
-> **Note**: Each developer runs `forge init` locally to get the latest Foundry setup. This ensures everyone uses the most recent version.
+> **Note**: Each developer runs `forge init` locally to get the latest Foundry version.
 
-### Development
+### Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start Next.js dev server (port 3000) |
+| `pnpm build:contracts` | Compile Solidity contracts |
+| `pnpm sync-abis` | Copy ABIs to frontend |
+| `pnpm test` | Run Forge tests |
+| `pnpm anvil` | Start local Ethereum node |
+| `pnpm lint` | Lint frontend code |
+
+### Running Locally
 
 ```bash
-# Start Next.js development server
+# Start development server
 pnpm dev
 
-# Compile smart contracts
-pnpm build:contracts
-
-# Run contract tests
-pnpm test
-
-# Sync ABIs to frontend
-pnpm sync-abis
-
-# Start local Ethereum node
-pnpm anvil
+# Open http://localhost:3000
 ```
 
-### Production Deployment (Docker)
+### Web3 Configuration
 
+1. **Get WalletConnect Project ID** (free):
+   - Visit [cloud.walletconnect.com](https://cloud.walletconnect.com)
+   - Create a project and copy your Project ID
+
+2. **Configure environment**:
 ```bash
-# Build and run production image
-docker-compose up
-
-# Or manually
-docker build -t aero .
-docker run -p 3000:3000 aero
+cp .env.example .env.local
+# Edit .env.local and add your WalletConnect Project ID
 ```
 
-> **Note**: For development, just use `pnpm dev` locally (no Docker needed)
+3. **Update Wagmi config**:
+```typescript
+// apps/web/lib/config/wagmi.ts
+projectId: 'YOUR_WALLETCONNECT_PROJECT_ID'
+```
 
----
+4. **Use wallet connection** in your components:
+```typescript
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+export default function Header() {
+  return <ConnectButton />;
+}
+```
 
 ## Project Structure
 
 ```
-aero/
+nextjs-foundry-starter/
 ├── apps/
-│   └── web/                    # Next.js frontend application
+│   └── web/                    # Next.js frontend
 │       ├── app/                # App Router pages
 │       ├── components/ui/      # shadcn/ui components
-│       ├── lib/                # Utilities and contracts
-│       └── public/             # Static assets
+│       └── lib/
+│           ├── contracts/      # Synced ABIs (gitignored)
+│           └── utils.ts        # Utilities
 │
-├── foundry/                    # Smart contract workspace
+├── foundry/                    # Smart contracts (gitignored, init locally)
 │   ├── src/                    # Solidity contracts
 │   ├── test/                   # Forge tests
-│   ├── script/                 # Deployment scripts
-│   └── lib/                    # Contract dependencies
+│   └── script/                 # Deployment scripts
 │
-├── scripts/                    # Build and utility scripts
+├── scripts/
 │   └── sync-abis.js            # ABI synchronization
 │
-├── docker-compose.yml          # Production deployment
-├── Dockerfile                  # Production container
-└── Makefile                    # Alternative CLI commands
+├── docker-compose.yml
+└── Dockerfile
 ```
 
----
-
-## Available Commands
-
-### pnpm Scripts
-
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start Next.js dev server on port 3000 |
-| `pnpm build` | Build contracts and web application |
-| `pnpm build:contracts` | Compile Solidity contracts |
-| `pnpm build:web` | Build Next.js for production |
-| `pnpm test` | Run Forge tests with verbose output |
-| `pnpm anvil` | Start local Ethereum node |
-| `pnpm sync-abis` | Copy ABIs from contracts to frontend |
-| `pnpm lint` | Lint frontend code |
-| `pnpm type-check` | Run TypeScript type checking |
-
-### Makefile Commands
-
-```bash
-make dev          # Start development
-make build        # Build contracts
-make test         # Run tests
-make sync-abis    # Sync ABIs
-make clean        # Clean build artifacts
-make help         # Show all commands
-```
-
----
-
-## Architecture
+## How It Works
 
 ### Contract Integration Flow
 
@@ -195,26 +186,49 @@ graph LR
     E --> F[Import in React]
 ```
 
-1. Write contracts in `foundry/src/`
-2. Compile: `pnpm build:contracts`
-3. Sync: `pnpm sync-abis`
-4. Import: `import ABI from '@/lib/contracts/Contract.json'`
+**The Complete Flow**:
 
-> **Note**: ABIs in `apps/web/lib/contracts/` are build artifacts (gitignored). Always regenerate after contract changes.
+1. **Write contracts** in `foundry/src/` using Solidity
+2. **Compile** with `pnpm build:contracts` (Forge generates ABIs)
+3. **Sync ABIs** with `pnpm sync-abis` (copies to `apps/web/lib/contracts/`)
+4. **Import** in React: `import ABI from '@/lib/contracts/Counter.json'`
+5. **Use with Web3** libraries (wagmi, viem, ethers - add as needed)
 
-### UI Component Pattern
+> **Important**: ABIs in `apps/web/lib/contracts/` are build artifacts (gitignored). Always regenerate after contract changes.
 
-Components use **shadcn/ui** copy-paste approach:
+### Adding Smart Contracts
+
+```bash
+# 1. Create contract
+# foundry/src/MyContract.sol
+
+# 2. Write tests
+# foundry/test/MyContract.t.sol
+
+# 3. Compile and sync
+pnpm build:contracts
+pnpm sync-abis
+
+# 4. Import in React
+import MyContractABI from '@/lib/contracts/MyContract.json'
+```
+
+### UI Components with shadcn/ui
+
+Components use a **copy-paste** approach - you own the code:
 
 ```bash
 # Add new component
-npx shadcn@latest add [component-name]
+npx shadcn@latest add button
 
-# Component is copied to components/ui/ (you own it)
+# Component is copied to components/ui/button.tsx
 # Customize freely without library constraints
+
+# Import and use
+import { Button } from '@/components/ui/button'
 ```
 
-### Styling Approach
+### Styling with Tailwind v4
 
 Tailwind v4 uses CSS-first configuration:
 
@@ -223,297 +237,53 @@ Tailwind v4 uses CSS-first configuration:
 - Dark mode with class-based `.dark` selector
 - Runtime theme switching via `next-themes`
 
----
-
-## Development Workflow
-
-### Adding a Smart Contract
-
-```bash
-# 1. Create contract
-foundry/src/MyContract.sol
-
-# 2. Write tests
-foundry/test/MyContract.t.sol
-
-# 3. Compile
-pnpm build:contracts
-
-# 4. Sync to frontend
-pnpm sync-abis
-
-# 5. Import in React
-import MyContractABI from '@/lib/contracts/MyContract.json'
-```
-
-### Adding UI Components
-
-```bash
-# Add component via CLI
-npx shadcn@latest add button
-
-# Component appears in:
-apps/web/components/ui/button.tsx
-
-# Import and use:
-import { Button } from '@/components/ui/button'
-```
-
-### Testing Contracts
-
-```bash
-# Run all tests
-pnpm test
-
-# Run specific test
-cd foundry && forge test --match-test testFuzz_SetNumber
-
-# Run with gas report
-cd foundry && forge test --gas-report
-
-# Run with verbose output
-cd foundry && forge test -vvvv
-```
-
----
-
-## Configuration
-
-### TypeScript Path Aliases
-
 ```typescript
-// Use @/* to import from apps/web/
+// TypeScript path aliases
 import { Button } from '@/components/ui/button'
-import utils from '@/lib/utils'
 import ABI from '@/lib/contracts/Counter.json'
 ```
 
-### pnpm Workspace
-
-```yaml
-# pnpm-workspace.yaml
-packages:
-  - 'apps/**'
-```
-
-```ini
-# .npmrc
-# Uses default isolated mode (symlinks)
-# Next.js standalone handles Docker compatibility automatically
-```
-
-### Git Hooks
-
-Pre-commit automatically runs:
-- ESLint on changed TypeScript files
-- Auto-fix where possible
-- Blocks commit on unfixable errors
-
----
-
-## Production Deployment
+## Deployment
 
 ### Vercel (Recommended)
 
-Vercel detecta automáticamente Next.js y optimiza el build:
+Deploy with zero configuration:
 
-1. Importa tu repositorio en [vercel.com](https://vercel.com)
-2. Vercel detecta el monorepo automáticamente
-3. Deploy con un click
+1. Import your repository at [vercel.com](https://vercel.com)
+2. Vercel auto-detects Next.js monorepo
+3. Deploy with one click
 
-**No necesitas configuración adicional.** Vercel:
-- Instala solo production dependencies
-- Optimiza el bundle automáticamente
-- Genera build estático cuando es posible
-- CDN global incluido
+**Automatically handled**:
+- Production dependency optimization
+- Automatic bundle optimization
+- Global CDN distribution
+- Environment variables
 
 ### Docker (VPS/Self-Hosted)
 
-Para desplegar en tu propio servidor usando Docker:
+Production-optimized multi-stage build:
 
 ```bash
-# Build y run
+# Build and run
 docker-compose up
 
-# O manualmente
-docker build -t aero .
-docker run -p 3000:3000 aero
-
-# Background
+# Run in background
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 ```
 
-**Optimizaciones incluidas**:
+**Optimizations included**:
 - Multi-stage build (builder → runner)
-- Next.js standalone output (~75% más pequeño)
-- Solo production dependencies en imagen final
-- Usuario no-root (nextjs:nodejs) para seguridad
-- Tamaño final: ~150-200 MB vs ~600-800 MB sin optimizar
-- **Compatibilidad con pnpm symlinks**: Next.js standalone resuelve automáticamente los symlinks de pnpm durante el build, creando una estructura sin symlinks lista para Docker
+- Next.js standalone output (~75% smaller)
+- Only production dependencies in final image
+- Non-root user for security
+- **Final size**: ~150-200 MB (vs ~600-800 MB unoptimized)
 
-### Development
-
-**No uses Docker para desarrollo**. Usa el entorno nativo:
-
-```bash
-pnpm dev  # Hot reload, debugging, mejor DX
-```
-
-**¿Por qué?**
-- Docker en dev es más lento
-- Complica el debugging
-- Hot reload menos confiable
-- Overhead innecesario
-
----
-
-## Contributing
-
-### Code Quality
-
-This project enforces code quality through:
-
-- **ESLint v9**: Flat config with Next.js rules
-- **TypeScript**: Strict mode enabled
-- **Husky**: Pre-commit hooks
-- **lint-staged**: Incremental linting
-
-### Development Guidelines
-
-1. Follow TypeScript strict mode
-2. Use shadcn/ui components for consistency
-3. Write tests for all smart contracts
-4. Sync ABIs after contract changes
-5. Keep components small and focused
-
----
-
-## Production Optimizations
-
-### Dependency Management
-
-Dependencies are correctly classified for optimal production builds:
-
-**Production Dependencies (10 packages)**:
-- Runtime essentials: `next`, `react`, `react-dom`
-- UI components: `@radix-ui/*`, `lucide-react`
-- Runtime utilities: `tailwind-merge`, `clsx`, `class-variance-authority`
-- Theme management: `next-themes`
-
-**Development Dependencies (7 packages)**:
-- Build tools: `typescript`, `tailwindcss`, `@tailwindcss/postcss`
-- Code quality: `eslint`, `eslint-config-next`
-- Type definitions: `@types/node`, `@types/react`
-
-**Why this matters**:
-- Vercel/Docker only install production deps in final build
-- ~40% reduction in deployment size
-- Faster installs and cold starts
-- Smaller bundle sizes
-
-**pnpm Configuration**:
-- Uses default `isolated` mode with symlinks for strict dependency management
-- No phantom dependencies: can only import packages declared in `package.json`
-- Next.js `standalone` output automatically resolves symlinks for Docker compatibility
-- Faster installs with content-addressable store and hard links
-
-### Multi-Stage Docker Build
-
-```dockerfile
-Stage 1 (Builder):
-  - Installs ALL dependencies with pnpm (isolated mode, uses symlinks)
-  - Compiles TypeScript → JavaScript
-  - Builds Next.js standalone (resolves symlinks, copies real files)
-  - ~800 MB (discarded after build)
-
-Stage 2 (Runner):
-  - Copies only standalone build (already symlink-free)
-  - Only production dependencies needed at runtime
-  - Non-root user (security)
-  - ~150-200 MB (75% reduction)
-```
-
-### What Gets Deployed
-
-**Included in production**:
-- Compiled JavaScript (from TypeScript)
-- Static CSS (from Tailwind)
-- Production node_modules
-- Public assets
-- Next.js runtime
-
-**NOT included (build-time only)**:
-- TypeScript compiler
-- ESLint and configs
-- Tailwind compiler
-- Source `.tsx` files
-- devDependencies
-
----
-
-## What's Included
-
-### Implemented
-
-- ✅ Complete monorepo structure
-- ✅ Next.js 16 with React 19 and TypeScript
-- ✅ Tailwind v4 with dark mode
-- ✅ shadcn/ui component library
-- ✅ Foundry smart contract environment
-- ✅ Example Counter contract with tests
-- ✅ ABI synchronization pipeline
-- ✅ Production-optimized Docker (multi-stage)
-- ✅ Optimized dependency classification
-- ✅ Git hooks for code quality
-
-### Roadmap
-
-- [ ] Web3 wallet integration (wagmi/viem)
-- [ ] Contract interaction hooks
-- [ ] Environment variable templates
-- [ ] CI/CD pipeline
-- [ ] Frontend testing framework
-- [ ] Vercel deployment guide
-
----
+> **Development**: Use `pnpm dev` locally (not Docker). Docker adds unnecessary overhead for local development.
 
 ## Troubleshooting
-
-<details>
-<summary><strong>Docker build fails or image is too large</strong></summary>
-
-**Problem**: Build fails or final image is > 500 MB
-
-**Solution**:
-1. Verify `output: 'standalone'` is in `next.config.mjs`
-2. Rebuild without cache:
-```bash
-docker-compose build --no-cache
-docker system prune -a  # Remove old images
-docker-compose up
-```
-
-**Expected final image size**: ~150-200 MB
-</details>
-
-<details>
-<summary><strong>Vercel build fails with dependency errors</strong></summary>
-
-**Problem**: Vercel can't find certain packages
-
-**Solution**: Check if dependencies are correctly classified:
-```bash
-# View current setup
-node -e "const p=require('./apps/web/package.json'); console.log('Prod:',Object.keys(p.dependencies).length,'Dev:',Object.keys(p.devDependencies).length)"
-
-# Should show: Prod: 10 Dev: 7
-```
-
-Runtime packages should be in `dependencies`, build tools in `devDependencies`.
-</details>
 
 <details>
 <summary><strong>ABIs not found in frontend</strong></summary>
@@ -524,24 +294,22 @@ Runtime packages should be in `dependencies`, build tools in `devDependencies`.
 ```bash
 pnpm sync-abis
 ```
-
-This compiles contracts and copies ABIs to `apps/web/lib/contracts/`
 </details>
 
 <details>
-<summary><strong>Docker container exits immediately</strong></summary>
+<summary><strong>Docker image too large</strong></summary>
 
-**Problem**: Container starts then stops with exit code 0 or 1
+**Problem**: Final image > 500 MB
 
-**Solution**: Check if `server.js` path is correct:
+**Solution**:
+1. Verify `output: 'standalone'` is in `next.config.mjs`
+2. Rebuild without cache:
 ```bash
-# Verify standalone structure
-docker run --rm aero ls -la apps/web/
-
-# Should show: server.js
+docker-compose build --no-cache
+docker-compose up
 ```
 
-If missing, rebuild with `docker-compose build --no-cache`
+**Expected size**: ~150-200 MB
 </details>
 
 <details>
@@ -557,13 +325,23 @@ pnpm --filter web eslint --fix "**/*.{ts,tsx}"
 ```
 </details>
 
----
+<details>
+<summary><strong>Forge command not found</strong></summary>
 
-## License
+**Problem**: `forge: command not found`
 
-[MIT](LICENSE)
+**Solution**: Install Foundry:
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
+</details>
 
----
+## What's Next?
+
+**nextjs-foundry-starter** is a solid foundation for building Web3 applications. We're continuously improving the template with new features, optimizations, and best practices as the ecosystem evolves.
+
+Feel free to customize it for your needs and contribute back to the community.
 
 ## Resources
 
@@ -573,12 +351,16 @@ pnpm --filter web eslint --fix "**/*.{ts,tsx}"
 - [shadcn/ui](https://ui.shadcn.com/)
 - [pnpm Documentation](https://pnpm.io/)
 
+## License
+
+[MIT](LICENSE)
+
 ---
 
 <div align="center">
 
 **Built with modern tools for modern Web3 development**
 
-[Report Bug](https://github.com/yourusername/aero/issues) · [Request Feature](https://github.com/yourusername/aero/issues)
+[Report Bug](https://github.com/yourusername/nextjs-foundry-starter/issues) · [Request Feature](https://github.com/yourusername/nextjs-foundry-starter/issues)
 
 </div>
