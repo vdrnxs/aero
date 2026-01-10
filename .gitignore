@@ -30,13 +30,9 @@ apps/web/build/
 # ==========================================
 # Foundry & Solidity
 # ==========================================
-foundry/cache/
-foundry/out/
-foundry/broadcast/*/31337/
-foundry/broadcast/**/dry-run/
-# Keep broadcast folder structure
-!foundry/broadcast
-foundry/docs/
+# Foundry is initialized locally by each developer
+# Run: forge init foundry --no-git
+foundry/
 
 # Synced ABIs (generated at build time)
 apps/web/lib/contracts/
