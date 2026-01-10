@@ -128,19 +128,13 @@ pnpm dev
    - Visit [cloud.walletconnect.com](https://cloud.walletconnect.com)
    - Create a project and copy your Project ID
 
-2. **Configure environment**:
+2. **Add to environment**:
 ```bash
 cp .env.example .env.local
-# Edit .env.local and add your WalletConnect Project ID
+# Add: NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 ```
 
-3. **Update Wagmi config**:
-```typescript
-// apps/web/lib/config/wagmi.ts
-projectId: 'YOUR_WALLETCONNECT_PROJECT_ID'
-```
-
-4. **Use wallet connection** in your components:
+3. **Use wallet connection** in your components:
 ```typescript
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
