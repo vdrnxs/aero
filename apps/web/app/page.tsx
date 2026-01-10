@@ -1,11 +1,12 @@
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ModeToggle } from "@/components/mode-toggle"
+import { ConnectButton } from "@/components/connect-button"
 
 export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center p-8">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <ConnectButton />
         <ModeToggle />
       </div>
       <Card className="w-full max-w-md">
@@ -17,11 +18,12 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Start building your decentralized application with Next.js, TypeScript, and Foundry.
+            Connect your wallet to interact with Hardhat local network (Chain ID: 31337)
           </p>
-          <div className="flex gap-2">
-            <Button variant="default">Get Started</Button>
-            <Button variant="outline">Learn More</Button>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <p>• Network: Hardhat Local</p>
+            <p>• RPC: http://127.0.0.1:8545</p>
+            <p>• Chain ID: 31337</p>
           </div>
         </CardContent>
       </Card>
