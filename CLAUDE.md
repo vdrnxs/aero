@@ -141,8 +141,10 @@ No testing framework installed yet. Expected to add Vitest or Jest + React Testi
   - Works with Docker: Next.js standalone copies real files (not symlinks) to `.next/standalone/`
 
 ### Foundry Configuration
-- `via_ir=true`: Uses IR-based optimizer (better optimization, slower builds)
-- forge-std installed as Git submodule in `foundry/lib/`
+- `foundry/` directory is **gitignored** - each developer initializes locally
+- Run `forge init foundry --no-git` to set up Foundry
+- This ensures everyone uses the latest Foundry version
+- forge-std is installed automatically by `forge init`
 
 ### Next.js Configuration
 - `output: 'standalone'`: Enables optimized production builds
