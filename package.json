@@ -4,14 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter web dev",
-    "build:contracts": "cd foundry && forge build",
     "build:web": "pnpm --filter web build",
-    "build": "pnpm build:contracts && pnpm build:web",
-    "test": "cd foundry && forge test -vvv",
-    "sync-abis": "pnpm build:contracts && node scripts/sync-abis.js",
-    "clean": "cd foundry && forge clean",
+    "sync-abis": "node scripts/sync-abis.js",
     "lint": "pnpm --filter web lint",
-    "type-check": "pnpm --filter web type-check",
     "prepare": "husky"
   },
   "devDependencies": {
