@@ -16,7 +16,7 @@ export function ConnectButton() {
 
   if (!mounted) {
     return (
-      <Button variant="default" size="sm" disabled>
+      <Button variant="outline" disabled>
         Connect Wallet
       </Button>
     );
@@ -28,7 +28,7 @@ export function ConnectButton() {
         <span className="text-sm text-muted-foreground">
           {address?.slice(0, 6)}...{address?.slice(-4)}
         </span>
-        <Button variant="outline" size="sm" onClick={() => disconnect()}>
+        <Button variant="outline" onClick={() => disconnect()}>
           Disconnect
         </Button>
       </div>
@@ -37,8 +37,7 @@ export function ConnectButton() {
 
   return (
     <Button
-      variant="default"
-      size="sm"
+      variant="outline"
       onClick={() => connect({ connector: connectors[0] })}
     >
       Connect Wallet
