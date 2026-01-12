@@ -2,7 +2,7 @@
 
 # nextjs-foundry-starter
 
-> **Aero** - Modern Web3 dApp monorepo template with Next.js 16, React 19, and Foundry smart contracts.
+> Modern Web3 dApp monorepo template with Next.js 16, React 19, and Foundry smart contracts.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
@@ -21,11 +21,11 @@ A production-ready starter for building decentralized applications with cutting-
 
 ## What is nextjs-foundry-starter?
 
-**nextjs-foundry-starter** (codename: **Aero**) is a full-stack Web3 development template designed to eliminate setup friction and let you focus on building your dApp.
+**nextjs-foundry-starter** is a full-stack Web3 development template designed to eliminate setup friction and let you focus on building your dApp.
 
 **The Problem**: Setting up a modern Web3 project involves juggling frontend frameworks, smart contract tooling, monorepo architecture, deployment configurations, and type safety. Most templates are either too minimal or overcomplicated.
 
-**The Solution**: Aero provides a carefully architected foundation that combines:
+**The Solution**: This template provides a carefully architected foundation that combines:
 - Latest React/Next.js features (Server Components, App Router)
 - Blazing-fast Solidity development with Foundry
 - Type-safe contract integration
@@ -36,15 +36,15 @@ A production-ready starter for building decentralized applications with cutting-
 
 ## Key Features
 
-⚡ **Next.js 16 + React 19** - Server Components, App Router, and streaming SSR
-🎨 **Tailwind CSS v4** - New @theme syntax, OKLCH colors, built-in dark mode
-🔗 **Foundry Integration** - Fast Solidity compilation, testing, and ABI sync
-🔐 **Web3 Ready** - Wagmi v2, RainbowKit, and Viem pre-configured
-📦 **pnpm Monorepo** - Isolated dependencies with symlink efficiency
-🎯 **Type-Safe Development** - End-to-end TypeScript with strict mode
-🧩 **shadcn/ui Components** - Copy-paste components you own and customize
-🐳 **Production Docker** - Multi-stage builds (~150MB final image)
-🔒 **Code Quality Automation** - Pre-commit hooks with ESLint + Husky
+- ⚡ **Next.js 16 + React 19** - Server Components, App Router, and streaming SSR
+- 🎨 **Tailwind CSS v4** - New @theme syntax, OKLCH colors, built-in dark mode
+- 🔗 **Foundry Integration** - Fast Solidity compilation, testing, and ABI sync
+- 🔐 **Web3 Ready** - Wagmi v2 and Viem for wallet connection and contract interaction
+- 📦 **pnpm Monorepo** - Isolated dependencies with symlink efficiency
+- 🎯 **Type-Safe Development** - End-to-end TypeScript with strict mode
+- 🧩 **shadcn/ui Components** - Copy-paste components you own and customize
+- 🐳 **Production Docker** - Multi-stage builds (~150MB final image)
+- 🔒 **Code Quality Automation** - Pre-commit hooks with ESLint + Husky
 
 ## Tech Stack
 
@@ -52,7 +52,7 @@ A production-ready starter for building decentralized applications with cutting-
 |-------|-----------|---------|
 | **Frontend** | Next.js 16, React 19, TypeScript 5.7 | Modern React framework with Server Components |
 | **Styling** | Tailwind CSS v4, shadcn/ui | Utility-first CSS with customizable components |
-| **Web3** | Wagmi v2, RainbowKit, Viem | Wallet connection and contract interaction |
+| **Web3** | Wagmi v2, Viem, React Query | Wallet connection and contract interaction |
 | **Smart Contracts** | Foundry, Solidity ^0.8.13 | Fast contract development and testing |
 | **Monorepo** | pnpm workspaces | Efficient package management with symlinks |
 | **Deployment** | Docker, Vercel | Production-optimized containerization |
@@ -90,8 +90,8 @@ forge --version
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd aero
+git clone https://github.com/yourusername/nextjs-foundry-starter.git
+cd nextjs-foundry-starter
 
 # Install frontend dependencies
 pnpm install
@@ -107,37 +107,105 @@ forge init foundry --no-git
 | Command | Description |
 |---------|-------------|
 | `pnpm dev` | Start Next.js dev server (port 3000) |
-| `pnpm build:contracts` | Compile Solidity contracts |
-| `pnpm sync-abis` | Copy ABIs to frontend |
-| `pnpm test` | Run Forge tests |
-| `pnpm anvil` | Start local Ethereum node |
+| `pnpm build:web` | Build Next.js production bundle |
+| `pnpm sync-abis` | Compile contracts & copy ABIs to frontend |
 | `pnpm lint` | Lint frontend code |
+| `cd foundry && forge build` | Compile Solidity contracts |
+| `cd foundry && forge test` | Run Forge tests |
+| `anvil` | Start Anvil local development node (Chain ID: 31337) |
 
 ### Running Locally
 
 ```bash
 # Start development server
+# This runs "next dev" in apps/web via workspace filter (--filter web)
 pnpm dev
 
 # Open http://localhost:3000
 ```
 
+The `pnpm dev` command uses the workspace filter to execute `next dev` specifically in the `apps/web` package, as configured in the root `package.json`.
+
 ### Web3 Configuration
 
-**Default setup**: Hardhat local network (Chain ID: 31337)
+**Wagmi v2** is pre-configured with:
+- **Network**: Local development node (Chain ID: 31337, Hardhat-compatible)
+- **Connector**: Injected wallet (MetaMask, etc.)
+- **Components**: `ConnectButton` for wallet connection
 
-To interact with contracts:
+**Start Anvil (local development node)**:
+```bash
+# In a separate terminal
+anvil
+```
+
+Anvil will start a local Ethereum node and generate 10 test accounts with private keys. Import one to your wallet:
+1. Copy a private key from the Anvil output (starts with `0x...`)
+2. Import it to MetaMask: **Settings → Import Account → Paste Private Key**
+3. Each account has **10,000 ETH** for testing
+
+Then configure your wallet to connect to the local node:
+- **Network Name**: Localhost 8545 (or any name you prefer)
+- **RPC URL**: `http://localhost:8545`
+- **Chain ID**: `31337`
+- **Currency Symbol**: ETH
+
+**Connect wallet**:
 ```typescript
-import { useAccount, useReadContract } from 'wagmi';
-import { CONTRACT_ADDRESS } from '@/lib/config/contract';
+import { ConnectButton } from '@/components/connect-button';
 
-// Read contract data
-const { data } = useReadContract({
+// In your component
+<ConnectButton />
+```
+
+**Interact with contracts**:
+```typescript
+import { useReadContract, useAccount } from 'wagmi';
+import SimpleTokenABI from '@/lib/contracts/SimpleToken.json';
+
+const CONTRACT_ADDRESS = '0x...'; // Your deployed SimpleToken address
+
+// Read your token balance
+const { address } = useAccount();
+const { data: balance } = useReadContract({
   address: CONTRACT_ADDRESS,
-  abi: YourContractABI,
-  functionName: 'yourFunction',
+  abi: SimpleTokenABI,
+  functionName: 'balanceOf',
+  args: [address],
 });
 ```
+
+**Deploy and use the SimpleToken**:
+
+1. **Deploy the contract**:
+   ```bash
+   # Make sure Anvil is running in a separate terminal
+   cd foundry
+   forge create src/SimpleToken.sol:SimpleToken \
+     --rpc-url http://localhost:8545 \
+     --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
+     --broadcast
+   ```
+
+   **Understanding the output**:
+   ```bash
+   No files changed, compilation skipped      # Contract unchanged, skip recompilation
+   Deployer: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266  # Wallet that deployed
+   Deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3  # ⭐ Contract address (use this!)
+   Transaction hash: 0xc0b87eb...              # Deployment transaction hash
+   ```
+
+   Copy the `Deployed to:` address - you'll need it for MetaMask and your frontend code.
+
+   > **Note for advanced users**: For production deployments with multiple contracts or complex setup logic, consider using [Foundry scripts](https://getfoundry.sh/guides/scripting-with-solidity) instead of `forge create`. Scripts are Solidity contracts that provide declarative deployments, dry-run simulation, multi-contract orchestration, and built-in verification—making them the professional standard for complex deployments.
+
+2. **Import token in MetaMask**:
+   - Open MetaMask → **Assets** tab
+   - Scroll down → **Import tokens**
+   - Paste your contract address
+   - Token symbol (SIM) and decimals (18) auto-fill
+   - Click **Add custom token**
+   - You'll see your 1,000,000 SIM tokens
 
 ## Project Structure
 
@@ -146,92 +214,70 @@ nextjs-foundry-starter/
 ├── apps/
 │   └── web/                    # Next.js frontend
 │       ├── app/                # App Router pages
-│       ├── components/ui/      # shadcn/ui components
-│       └── lib/
-│           ├── contracts/      # Synced ABIs (gitignored)
-│           └── utils.ts        # Utilities
+│       │   ├── globals.css     # Tailwind CSS + theme config
+│       │   ├── layout.tsx      # Root layout
+│       │   └── page.tsx        # Home page
+│       ├── components/
+│       │   ├── ui/             # shadcn/ui components
+│       │   ├── connect-button.tsx    # Wallet connection
+│       │   ├── mode-toggle.tsx       # Dark mode toggle
+│       │   └── providers.tsx         # Wagmi + React Query
+│       ├── lib/
+│       │   ├── contracts/      # Synced ABIs (gitignored)
+│       │   └── utils.ts        # Utilities (cn, etc.)
+│       ├── public/             # Static assets
+│       └── package.json        # Frontend dependencies
 │
-├── foundry/                    # Smart contracts (gitignored, init locally)
+├── foundry/                    # Smart contracts
 │   ├── src/                    # Solidity contracts
 │   ├── test/                   # Forge tests
-│   └── script/                 # Deployment scripts
+│   ├── script/                 # Deployment scripts
+│   └── foundry.toml            # Foundry config
 │
 ├── scripts/
 │   └── sync-abis.js            # ABI synchronization
 │
-├── docker-compose.yml
-└── Dockerfile
+├── .husky/                     # Git hooks
+├── .env.example                # Environment variables template
+├── docker-compose.yml          # Docker orchestration
+├── Dockerfile                  # Production image
+├── package.json                # Root workspace config
+└── pnpm-workspace.yaml         # Workspace definition
 ```
 
 ## How It Works
 
-### Contract Integration Flow
+### Contract-to-Frontend Integration
 
-```mermaid
-graph LR
-    A[Write Solidity] --> B[Compile with Forge]
-    B --> C[Generate ABIs]
-    C --> D[sync-abis.js]
-    D --> E[Copy to Frontend]
-    E --> F[Import in React]
-```
+This template connects your Solidity contracts to your React frontend through a simple pipeline:
 
-**The Complete Flow**:
+**Write Solidity** → **Compile with Forge** → **Generate ABIs** → **Sync to Frontend** → **Import in React**
+
+#### Step-by-Step:
 
 1. **Write contracts** in `foundry/src/` using Solidity
-2. **Compile** with `pnpm build:contracts` (Forge generates ABIs)
-3. **Sync ABIs** with `pnpm sync-abis` (copies to `apps/web/lib/contracts/`)
-4. **Import** in React: `import ABI from '@/lib/contracts/Counter.json'`
-5. **Use with Web3** libraries (wagmi, viem, ethers - add as needed)
+2. **Compile contracts** with `cd foundry && forge build`
+   - Forge generates JSON artifacts in `foundry/out/`
+3. **Sync ABIs** with `pnpm sync-abis`
+   - Script copies ABIs from `foundry/out/` to `apps/web/lib/contracts/`
+4. **Import in React**:
+   ```typescript
+   import SimpleTokenABI from '@/lib/contracts/SimpleToken.json'
+   ```
+5. **Use with Wagmi hooks**:
+   ```typescript
+   import { useAccount } from 'wagmi'
 
-> **Important**: ABIs in `apps/web/lib/contracts/` are build artifacts (gitignored). Always regenerate after contract changes.
+   const { address } = useAccount()
+   const { data: balance } = useReadContract({
+     address: CONTRACT_ADDRESS,
+     abi: SimpleTokenABI,
+     functionName: 'balanceOf',
+     args: [address],
+   })
+   ```
 
-### Adding Smart Contracts
-
-```bash
-# 1. Create contract
-# foundry/src/MyContract.sol
-
-# 2. Write tests
-# foundry/test/MyContract.t.sol
-
-# 3. Compile and sync
-pnpm build:contracts
-pnpm sync-abis
-
-# 4. Import in React
-import MyContractABI from '@/lib/contracts/MyContract.json'
-```
-
-### UI Components with shadcn/ui
-
-Components use a **copy-paste** approach - you own the code:
-
-```bash
-# Add new component
-npx shadcn@latest add button
-
-# Component is copied to components/ui/button.tsx
-# Customize freely without library constraints
-
-# Import and use
-import { Button } from '@/components/ui/button'
-```
-
-### Styling with Tailwind v4
-
-Tailwind v4 uses CSS-first configuration:
-
-- Theme tokens in `app/globals.css` via `@theme` directive
-- OKLCH color space for perceptual uniformity
-- Dark mode with class-based `.dark` selector
-- Runtime theme switching via `next-themes`
-
-```typescript
-// TypeScript path aliases
-import { Button } from '@/components/ui/button'
-import ABI from '@/lib/contracts/Counter.json'
-```
+> **Important**: ABIs in `apps/web/lib/contracts/` are build artifacts (gitignored). Always run `pnpm sync-abis` after contract changes.
 
 ## Deployment
 
@@ -273,70 +319,12 @@ docker-compose logs -f
 
 > **Development**: Use `pnpm dev` locally (not Docker). Docker adds unnecessary overhead for local development.
 
-## Troubleshooting
-
-<details>
-<summary><strong>ABIs not found in frontend</strong></summary>
-
-**Problem**: Import errors for contract ABIs
-
-**Solution**: ABIs are build artifacts (gitignored). Generate them:
-```bash
-pnpm sync-abis
-```
-</details>
-
-<details>
-<summary><strong>Docker image too large</strong></summary>
-
-**Problem**: Final image > 500 MB
-
-**Solution**:
-1. Verify `output: 'standalone'` is in `next.config.mjs`
-2. Rebuild without cache:
-```bash
-docker-compose build --no-cache
-docker-compose up
-```
-
-**Expected size**: ~150-200 MB
-</details>
-
-<details>
-<summary><strong>Pre-commit hook failing</strong></summary>
-
-**Problem**: Git commit blocked by linter
-
-**Solution**: Fix ESLint errors:
-```bash
-pnpm lint
-# Or auto-fix
-pnpm --filter web eslint --fix "**/*.{ts,tsx}"
-```
-</details>
-
-<details>
-<summary><strong>Forge command not found</strong></summary>
-
-**Problem**: `forge: command not found`
-
-**Solution**: Install Foundry:
-```bash
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
-```
-</details>
-
-## What's Next?
-
-**nextjs-foundry-starter** is a solid foundation for building Web3 applications. We're continuously improving the template with new features, optimizations, and best practices as the ecosystem evolves.
-
-Feel free to customize it for your needs and contribute back to the community.
-
 ## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Foundry Book](https://book.getfoundry.sh/)
+- [Wagmi Documentation](https://wagmi.sh/)
+- [Viem Documentation](https://viem.sh/)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [pnpm Documentation](https://pnpm.io/)
@@ -351,6 +339,6 @@ Feel free to customize it for your needs and contribute back to the community.
 
 **Built with modern tools for modern Web3 development**
 
-[Report Bug](https://github.com/yourusername/nextjs-foundry-starter/issues) · [Request Feature](https://github.com/yourusername/nextjs-foundry-starter/issues)
+[⭐ Star on GitHub](https://github.com/yourusername/nextjs-foundry-starter)
 
 </div>
