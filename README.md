@@ -140,7 +140,7 @@ cp .env.example .env.local
 
 Key variables:
 - `NEXT_PUBLIC_LOCAL_RPC_URL` - RPC endpoint for Anvil (default: `http://127.0.0.1:8545`)
-- `NEXT_PUBLIC_SIMPLE_TOKEN_ADDRESS_LOCAL` - Deployed SimpleToken address (update after deployment)
+- `NEXT_PUBLIC_SIMPLE_TOKEN_ADDRESS` - Deployed SimpleToken address (update after deployment)
 
 **Wagmi v2** is pre-configured with:
 - **Network**: Local development node using Chain ID 31337 (same as Hardhat for compatibility)
