@@ -242,12 +242,10 @@ nextjs-foundry-starter/
 │       │   └── page.tsx        # Home page
 │       ├── components/
 │       │   ├── ui/             # shadcn/ui components
-│       │   │   ├── alert.tsx         # Reusable alert component
 │       │   │   ├── button.tsx        # Button component
 │       │   │   ├── card.tsx          # Card component
 │       │   │   └── dropdown-menu.tsx # Dropdown component
 │       │   ├── connect-button.tsx    # Wallet connection w/ error handling
-│       │   ├── network-validator.tsx # Network validation alert
 │       │   ├── mode-toggle.tsx       # Dark mode toggle
 │       │   ├── theme-provider.tsx    # Theme context
 │       │   └── providers.tsx         # Wagmi + React Query setup
