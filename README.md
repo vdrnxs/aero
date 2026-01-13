@@ -128,10 +128,26 @@ The `pnpm dev` command uses the workspace filter to execute `next dev` specifica
 
 ### Web3 Configuration
 
+**Environment Variables** (optional):
+```bash
+# Copy the example file
+cp .env.example .env.local
+
+# Edit with your configuration
+# Default values work for local development
+```
+
+Key variables:
+- `NEXT_PUBLIC_LOCAL_RPC_URL` - RPC endpoint for Anvil (default: `http://127.0.0.1:8545`)
+- `NEXT_PUBLIC_SIMPLE_TOKEN_ADDRESS_LOCAL` - Deployed SimpleToken address (update after deployment)
+
 **Wagmi v2** is pre-configured with:
-- **Network**: Local development node (Chain ID: 31337, Hardhat-compatible)
+- **Network**: Local development node using Chain ID 31337 (same as Hardhat for compatibility)
 - **Connector**: Injected wallet (MetaMask, etc.)
 - **Components**: `ConnectButton` for wallet connection
+- **Configuration**: See [providers.tsx](apps/web/components/providers.tsx) - RPC URL configurable via env vars
+
+> **Note**: Wagmi uses the `hardhat` chain configuration (from `wagmi/chains`) because both Anvil and Hardhat use Chain ID 31337 by default. This ensures compatibility with tooling and wallets that expect this standard local development chain ID.
 
 **Start Anvil (local development node)**:
 ```bash
