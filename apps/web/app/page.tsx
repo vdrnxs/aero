@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ModeToggle } from "@/components/mode-toggle"
 import { ConnectButton } from "@/components/connect-button"
-import { NetworkValidator } from "@/components/network-validator"
 import { NETWORK_CONFIG } from "@/lib/web3"
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <NetworkValidator />
           <p className="text-sm text-muted-foreground">
             Connect your wallet to interact with the local development node (Chain ID: {NETWORK_CONFIG.chainId})
           </p>

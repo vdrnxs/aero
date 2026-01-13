@@ -39,7 +39,7 @@ A production-ready starter for building decentralized applications with cutting-
 - ⚡ **Next.js 16 + React 19** - Server Components, App Router, and streaming SSR
 - 🎨 **Tailwind CSS v4** - New @theme syntax, OKLCH colors, built-in dark mode
 - 🔗 **Foundry Integration** - Fast Solidity compilation, testing, and ABI sync
-- 🔐 **Web3 Ready** - Wagmi v2 and Viem with error handling, loading states, and network validation
+- 🔐 **Web3 Ready** - Wagmi v2 and Viem with error handling and loading states
 - 📦 **pnpm Monorepo** - Isolated dependencies with symlink efficiency
 - 🎯 **Type-Safe Development** - End-to-end TypeScript with strict mode
 - 🧩 **shadcn/ui Components** - Copy-paste components you own and customize
@@ -180,16 +180,6 @@ The `ConnectButton` component includes:
 - ✅ Error handling with user-friendly messages
 - ✅ Automatic address formatting (0x1234...5678)
 - ✅ Hydration-safe rendering (no SSR mismatches)
-
-**Network validation**:
-```typescript
-import { NetworkValidator } from '@/components/network-validator';
-
-// Shows alert if user connects to wrong network
-<NetworkValidator />
-```
-
-Automatically detects if the user is connected to a network other than Chain ID 31337 and displays a warning.
 
 **Interact with contracts**:
 ```typescript
