@@ -105,15 +105,20 @@ forge init foundry --no-git
 
 ### Development Commands
 
+**Frontend**:
 | Command | Description |
 |---------|-------------|
 | `pnpm dev` | Start Next.js dev server (port 3000) |
-| `pnpm build:web` | Build Next.js production bundle |
-| `pnpm sync-abis` | Compile contracts & copy ABIs to frontend |
-| `pnpm lint` | Lint frontend code |
-| `cd foundry && forge build` | Compile Solidity contracts |
-| `cd foundry && forge test` | Run Forge tests |
-| `anvil` | Start Anvil local development node (Chain ID: 31337) |
+| `pnpm lint` | Lint frontend code with ESLint |
+| `pnpm build:web` | Build production bundle |
+
+**Smart Contracts**:
+| Command | Description |
+|---------|-------------|
+| `anvil` | Start local Ethereum node (Chain ID: 31337) |
+| `pnpm sync-abis` | Sync contract ABIs to frontend |
+| `cd foundry && forge test` | Run contract tests |
+| `cd foundry && forge test -vvv` | Run tests with verbose output |
 
 ### Running Locally
 
@@ -131,10 +136,10 @@ The `pnpm dev` command uses the workspace filter to execute `next dev` specifica
 
 **Environment Variables** (optional):
 ```bash
-# Copy the example file
-cp .env.example .env.local
+# Copy the example file to apps/web/
+cp .env.example apps/web/.env.local
 
-# Edit with your configuration
+# Edit apps/web/.env.local with your configuration
 # Default values work for local development
 ```
 
@@ -181,7 +186,7 @@ Then configure your wallet to connect to the local node:
 
    **Understanding the output**:
    ```bash
-   No files changed, compilation skipped      # Contract unchanged, skip recompilation
+   Compiling 1 files with Solc 0.8.28         # Compiling your contract
    Deployer: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266  # Wallet that deployed
    Deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3  # ⭐ Contract address (use this!)
    Transaction hash: 0xc0b87eb...              # Deployment transaction hash
@@ -234,6 +239,7 @@ nextjs-foundry-starter/
 │       │   │   ├── card.tsx          # Card component
 │       │   │   └── dropdown-menu.tsx # Dropdown component
 │       │   ├── connect-button.tsx    # Wallet connection w/ error handling
+│       │   ├── token-balance.tsx     # Token balance display
 │       │   ├── mode-toggle.tsx       # Dark mode toggle
 │       │   ├── theme-provider.tsx    # Theme context
 │       │   └── providers.tsx         # Wagmi + React Query setup
@@ -269,13 +275,14 @@ nextjs-foundry-starter/
 
 This template connects your Solidity contracts to your React frontend through a simple pipeline:
 
-**Write Solidity** → **Compile with Forge** → **Generate ABIs** → **Sync to Frontend** → **Import in React**
+**Write Solidity** → **Deploy Contract** → **Sync ABIs** → **Import in React**
 
 #### Step-by-Step:
 
 1. **Write contracts** in `foundry/src/` using Solidity
-2. **Compile contracts** with `cd foundry && forge build`
-   - Forge generates JSON artifacts in `foundry/out/`
+2. **Deploy contract** with `forge create --broadcast`
+   - Compiles and deploys to Anvil
+   - Generates ABI in `foundry/out/`
 3. **Sync ABIs** with `pnpm sync-abis`
    - Script copies ABIs from `foundry/out/` to `apps/web/lib/contracts/`
 4. **Import in React**:
