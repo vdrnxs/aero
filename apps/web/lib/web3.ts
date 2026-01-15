@@ -15,6 +15,12 @@ export const NETWORK_CONFIG = {
 } as const;
 
 /**
+ * Token symbol for SimpleToken contract
+ * Update this if you deploy a different token
+ */
+export const TOKEN_SYMBOL = 'SIM';
+
+/**
  * Format an Ethereum address to a shortened display format
  *
  * @param address - Full Ethereum address (0x...)
