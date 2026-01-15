@@ -253,75 +253,18 @@ const { data } = useReadContract({
 
 ### Quick Reference
 
-**Common Wagmi Hooks:**
-```typescript
-// Reading contract data
-import { useReadContract } from 'wagmi'
-const { data, isLoading, error } = useReadContract({
-  address: '0x...',
-  abi: YourABI.abi,
-  functionName: 'myFunction',
-  args: [arg1, arg2],
-})
+**Key Wagmi Hooks:** `useReadContract`, `useWriteContract`, `useAccount`, `useChainId`, `useSwitchChain`
+**Viem Utilities:** `formatEther`, `parseEther`, `formatUnits`, `parseUnits`
+**Foundry Commands:** `forge build`, `forge test`, `forge create`, `anvil`
 
-// Writing to contract
-import { useWriteContract } from 'wagmi'
-const { writeContract, isPending } = useWriteContract()
-await writeContract({
-  address: '0x...',
-  abi: YourABI.abi,
-  functionName: 'myFunction',
-  args: [arg1, arg2],
-})
+**Adding Networks:**
+Import chains from `wagmi/chains` and add to [providers.tsx](apps/web/components/providers.tsx:10) config.
+The `NetworkSwitcher` automatically displays all configured networks.
 
-// Getting connected wallet
-import { useAccount } from 'wagmi'
-const { address, isConnected } = useAccount()
-```
-
-**Common Viem Utilities:**
-```typescript
-import { formatUnits, parseUnits, formatEther, parseEther } from 'viem'
-
-// Convert wei to readable format
-formatUnits(1000000000000000000n, 18) // "1.0"
-formatEther(1000000000000000000n)     // "1.0" (shorthand for 18 decimals)
-
-// Convert readable to wei
-parseUnits('1.5', 18)  // 1500000000000000000n
-parseEther('1.5')      // 1500000000000000000n (shorthand)
-```
-
-**Foundry Commands:**
-```bash
-forge build                    # Compile contracts
-forge test                     # Run all tests
-forge test -vvv                # Run tests with detailed output
-forge test --match-test testFoo # Run specific test
-anvil                          # Start local node
-forge create src/Contract.sol:Contract --rpc-url http://localhost:8545 --private-key 0x... --broadcast
-```
-
-**Adding More Networks:**
-
-To add additional networks (Sepolia, Polygon, etc.), update your [providers.tsx](apps/web/components/providers.tsx):
-
-```typescript
-import { hardhat, mainnet, sepolia, polygon } from 'wagmi/chains'
-
-const config = createConfig({
-  chains: [hardhat, mainnet, sepolia, polygon],
-  transports: {
-    [hardhat.id]: http('http://127.0.0.1:8545'),
-    [mainnet.id]: http(), // Public RPC
-    [sepolia.id]: http(), // Public RPC
-    [polygon.id]: http(), // Public RPC
-    // Or use custom RPC: http('https://your-rpc-url.com')
-  },
-})
-```
-
-The `NetworkSwitcher` component will automatically display all configured networks.
+**Documentation:**
+- [Wagmi Hooks](https://wagmi.sh/react/hooks) - Contract interaction
+- [Viem Utilities](https://viem.sh/docs/utilities) - Ethereum utilities
+- [Foundry Book](https://book.getfoundry.sh/) - Smart contract development
 
 ## Deployment
 
